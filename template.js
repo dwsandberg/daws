@@ -376,7 +376,7 @@ window.open(page);
 
   
  } } ; 
-  fetch("/"+library+".wasm")
+  fetch(""+library+".wasm")
  .then(function(response){ return response.arrayBuffer()})
  .then(function(bytes){ return WebAssembly.instantiate(bytes, importObject)})
  .then(function(results){ 
