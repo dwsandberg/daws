@@ -1,17 +1,29 @@
 <!doctype html>
-<title> DaWS Editor </title>
+<title> Daws Editor </title>
 <meta charset="UTF-8">
-<button onclick= batch() >testing</button> <button onclick="openAndFillWindow()">Open New Window</button>
-<input type="file" id="file-input" multiple accept=".css, .xhtml, .html" />
-<div id="message"></div>
+<style>  
+#message{color:red;}
+.tools  { background-color:lightgray;}
+</style> 
+<div class=tools >
+<input hidden type="file" id="file-input" multiple accept=".css, .xhtml, .html" />
+<label for="file-input"> upload </label>  | </span>
+<a   > <span  id=f45> filename.html </span>   </a> 
+ | </span>
+<span id="message"></span>
+</div>
 <h2> filecontent </h2>
-<pre editable id="file-content"></pre>
+<pre contenteditable=true id="file-content"></pre>
 <h2> css </h2>
-<pre editable id="file-css"></pre>
-<pre editable id="file-html"></pre>
+<pre contenteditable=true id="file-css"></pre>
+<pre   id="file-html"></pre>
 <script>
 const fileInput = document.getElementById("file-input");
  const messageDisplay = document.getElementById("message");
+const mytest=   document.getElementById("f45");
+
+ mytest.addEventListener("contextmenu", download);
+ mytest.addEventListener("click", download);
 
 fileInput.addEventListener("change", handleFileSelection);
 
@@ -30,24 +42,29 @@ function readFileAsText(file) {
   });
 }
 
-function handleFileSelection(event) {
+async function handleFileSelection(event) {
     selectedFiles = Array.from(event.target.files);
   
     // Map each file to a promise that reads it as text
     const promises = selectedFiles.map(readFileAsText);
 
     //   wait for all promises to resolve
-    Promise.all(promises)
+     await Promise.all(promises)
     .then((results) => {
       // process the fetched files
-      results.forEach((content, index) => { type=selectedFiles[index].type;
-      fileContentDisplay=document.getElementById(type=="text/css"?"file-css":"file-content"); 
+      results.forEach( (content, index) => { 
+      type=selectedFiles[index].type;
+      storeId=type=="text/css"?"file-css":"file-content"
+      if (storeId=="file-content") document.getElementById("f45").innerHTML=selectedFiles[index].name;
+      fileContentDisplay=document.getElementById( storeId); 
       fileContentDisplay.textContent =content;
+      console.log("resolve"+index+" type:"+type+" storeid:" +storeId);
     });
   } )
   .catch((error) => {
      console.error('Error reading files:', error);
   } )
+    batch();
 }
 
 
@@ -57,25 +74,21 @@ function showMessage(message, type) {
   messageDisplay.style.color = type === "error" ? "red" : "green";
 }
 
-function openAndFillWindow() {
+function download() {
 
-    test5();
-    let newWindow = window.open("", "generatedWindow", "width=700,height=500,resizable=yes,scrollbars=yes");
-
-    if (newWindow) { // Check if the window was successfully opened (not blocked by pop-up blocker)
-        let generatedHTML = document.getElementById("file-html").textContent;
-        console.log(generatedHTML);
-        newWindow.document.write(generatedHTML);
-        newWindow.document.close();
-    } else {
-        alert("Pop-up blocked! Please allow pop-ups for this site.");
-    }
-}
-
-// You would typically call this function from an event, e.g., a button click
-// <button onclick="openAndFillWindow()">Open New Window</button>
-
+   element= event.target;
+    filename=element.textContent;
   
+    test5();
+
+       
+        let generatedHTML = document.getElementById("file-html").textContent;
+
+   element.parentNode.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(generatedHTML ));
+
+   element.parentNode.setAttribute('download', filename);
+  
+}
 
 
 </script> 
