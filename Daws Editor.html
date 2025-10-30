@@ -1,14 +1,18 @@
 <!doctype html>
 <title> Daws Editor </title>
+<link rel="icon" type="image/png" href="favicon.png">
 <meta charset="UTF-8">
 <style>  
 #message{color:red;}
 .tools  { background-color:lightgray;}
+pre {
+  white-space: pre-wrap;
+}
 </style> 
 <div class=tools >
 <input hidden type="file" id="file-input" multiple accept=".css, .xhtml, .html" />
 <label for="file-input"> upload </label>  | </span>
-<a   > <span  id=f45> filename.html </span>   </a> 
+<a   > <span  id=f45>  </span>   </a> 
  | </span>
 <span id="message"></span>
 </div>
@@ -75,20 +79,19 @@ function showMessage(message, type) {
 }
 
 function download() {
-
+ // to save files on the client machine, we use the context menu. which allows the downloaded files to be
+ // saved amywhere.
    element= event.target;
     filename=element.textContent;
   
     test5();
-
-       
-        let generatedHTML = document.getElementById("file-html").textContent;
-
+   let generatedHTML = document.getElementById("file-html").textContent;
    element.parentNode.setAttribute('href', 'data:text/html;charset=utf-8,' + encodeURIComponent(generatedHTML ));
-
+   
    element.parentNode.setAttribute('download', filename);
-  
+
 }
+
 
 
 </script> 

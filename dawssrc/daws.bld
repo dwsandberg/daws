@@ -1,0 +1,50 @@
+# cat ~/Documents/kilnlogs/*.csv > ~/work/pot/allfirings.csv
+
+  define open  shell open input:
+
+
+define makelib taubc makebitcode
+
+define transform tools
+
+define daws daws
+
+define chemistry daws
+
+define wasm webassembly
+
+makelib  +built taubc.libinfo +daws daws.ls classinfo  format5
+ exports: daws
+Library: daws
+output: daws.lib daws.libsrc
+
+# cp daws/save   daws
+
+ transform taubc.libinfo daws.libsrc reorguse: true   output:junk.html
+
+     daws  +daws  slides.css    slides.txt output: +daws   slides.html  
+
+   daws  +daws  slides.css    slides.html   output: ssout3.txt
+   
+      daws  +daws  class.css  combined.txt   output: +daws   combined.html help
+     
+      daws  +daws  class.css combined.html      output: out2.txt
+ 
+
+    daws  +daws  mystyle.css    debug.txt  help   output: +daws   debug.html help
+     
+      daws  +daws  mystyle.css .html  debug  help    output: out2.txt
+ 
+ #  daws  +daws  mystyle.css    help.html   output: + daws xxx
+ 
+#  open +daws  help.html output: done.txt
+
+ transform   +daws webedit.ls reorguse: true   target: tmp/daws
+output: pretty2.html
+
+  wasm webcore.libsrc core tausupport
++daws webedit.html     daws.ls classinfo webedit format5
+exports:   webedit
+Library: webedit
+info:
+output: webedit.wasm webedit.libsrc  
