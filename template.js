@@ -264,7 +264,7 @@ var importObject = { imports:{
     break;
     default: r=z.innerHTML  ;
     }
-   // console.log("GETELEMENT"+asjsstring( id)+"="+r);   
+    console.log("GETELEMENT"+asjsstring( id)+r.length);   
   return jsstring2UTF8bytes(r); 
 }
 
