@@ -195,7 +195,7 @@ var importObject = { imports:{
   try { return exports.processbody(wrapper, args); } 
   catch(err){ 
     var b; 
-  console.log("catch err"+ err.message +"err"+"name:"+(err.name)); 
+  console.log("catch err"+ err.message +"err"+"name:"+(asjsstring(err.name))); 
     if(err.message ===undefined){ b = err; } 
     else if(err.message.startsWith("Division")){ b = 0; } 
     else { b = 0; } 
@@ -204,7 +204,7 @@ var importObject = { imports:{
 
 , setelementvalue:function  (id ,textin ){
   let text=asjsstring(textin); 
-  console.log("SETELEMENT"+text);   
+  console.log("SETELEMENT"+(text.length < 50) ? text : text.length);   
   let  z = document.getElementById(asjsstring( id )); 
   /* replaced with switch below. 10/21/2025
   let  kind = z.tagName; 
@@ -376,7 +376,7 @@ window.open(page);
 
   
  } } ; 
-  fetch(""+library+".wasm")
+  fetch("/built/"+library+".wasm")
  .then(function(response){ return response.arrayBuffer()})
  .then(function(bytes){ return WebAssembly.instantiate(bytes, importObject)})
  .then(function(results){ 
