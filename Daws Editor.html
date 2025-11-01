@@ -61,14 +61,15 @@ async function handleFileSelection(event) {
       storeId=type=="text/css"?"file-css":"file-content"
       if (storeId=="file-content") document.getElementById("f45").innerHTML=selectedFiles[index].name;
       fileContentDisplay=document.getElementById( storeId); 
-      fileContentDisplay.textContent =content;
+      fileContentDisplay.textContent =content.replace(/\r\n/g, '\n');;
       console.log("resolve"+index+" type:"+type+" storeid:" +storeId);
     });
   } )
+  .finally (()=>{batch();})
   .catch((error) => {
      console.error('Error reading files:', error);
   } )
-    batch();
+    
 }
 
 
@@ -92,12 +93,20 @@ function download() {
 
 }
 
+  window.addEventListener('beforeunload', function (event) {
+  // Check if there are unsaved changes.
+  // This could involve checking form field values, a 'dirty' flag, etc.
+  const hasUnsavedChanges = true; // ???? need better logic
 
+  if (hasUnsavedChanges) {
+    const confirmationMessage = 'You have unsaved changes. Are you sure you want to leave?';
+    event.returnValue = confirmationMessage;  
+  }
+});
 
 </script> 
  
- 
- <script src = "template.js" > </script> <script>
+ <script src = "/template.js" > </script> <script>
 function addencodings (a) {exports.addencodings (a) ; if (inprogress == 0) exports.reclaimspace () ;}
 function blockseqtype () {exports.blockseqtype () ; if (inprogress == 0) exports.reclaimspace () ;}
 function reclaimspace () {exports.reclaimspace () ; if (inprogress == 0) exports.reclaimspace () ;}

@@ -285,7 +285,6 @@ var importObject = { imports:{
     for( i=0; i <  myArr.length; i++)  { 
        let t=myArr[i].trim()
        if (t=="textContent"){
-          console.log("SDF"+element.textContent);
         result+=element.textContent+" "; }
        else 
       result+=element.getAttribute( t )+" ";
